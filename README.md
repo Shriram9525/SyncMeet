@@ -1,2 +1,2 @@
-# Zoom
+# SyncMeet
 A full stack video conferencing web application.
