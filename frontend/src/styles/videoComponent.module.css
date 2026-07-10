@@ -1,0 +1,164 @@
+.meetVideoContainer {
+    position: relative;
+    height: 100vh;
+    background: #0B0B0E;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+.meetUserVideo {
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.buttonContainers {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    padding-block: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.buttonContainers button {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease-in-out !important;
+}
+
+.buttonContainers button:hover {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    transform: scale(1.1);
+}
+
+.conferenceView { 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    width: 100%;
+}
+
+.videoWrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #1e1e24;
+    transition: all 0.3s ease;
+}
+
+.videoLabel {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
+    font-family: 'Roboto', 'Inter', sans-serif;
+}
+
+.chatRoom {
+    position: relative;
+    height: calc(100vh - 100px);
+    margin-top: 15px;
+    margin-right: 15px;
+    background: rgba(22, 22, 29, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 350px;
+    overflow: hidden;
+    z-index: 100;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    display: flex;
+    flex-direction: column;
+}
+
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.chattingDisplay {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    margin-bottom: 70px; /* Leave space for typing area */
+}
+
+.chattingArea {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #16161d;
+    padding: 15px;
+    display: flex;
+    gap: 8px;
+}
+
+.reactionsContainer {
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    height: 450px;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 100;
+}
+
+.floatingReaction {
+    position: absolute;
+    bottom: 0;
+    font-size: 38px;
+    animation: floatUp 2.5s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(0.4) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(-20px) scale(1.4) rotate(10deg);
+    }
+    100% {
+        transform: translateY(-400px) scale(0.6) rotate(-25deg);
+        opacity: 0;
+    }
+}
+
+/* Flashing recording state */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

@@ -1,0 +1,123 @@
+# SyncMeet - GitHub Push & Deployment Guide
+
+This guide details the step-by-step instructions to initialize git, push the code to a GitHub repository, and deploy both the backend server and frontend application to production hosting services (Render and Vercel).
+
+---
+
+## Part 1: Push Project to GitHub
+
+### 1. Initialize Git Repository
+In the root directory of your project (`d:/project/Zoom-main`), open terminal and run:
+```bash
+# Initialize git
+git init
+
+# Check status of files
+git status
+```
+
+### 2. Verify gitignore Configurations
+Ensure that both directories have `.gitignore` files to prevent uploading dependencies and private credentials:
+- **`backend/.gitignore`** should contain:
+  ```
+  node_modules/
+  .env
+  ```
+- **`frontend/.gitignore`** should contain:
+  ```
+  node_modules/
+  build/
+  .env.local
+  .env
+  ```
+
+### 3. Stage and Commit Changes
+```bash
+# Add all files to staging area
+git add .
+
+# Create the initial commit
+git commit -m "Initialize project and add SyncMeet UI/UX updates"
+```
+
+### 4. Push to GitHub
+Create a new **public or private repository** named `SyncMeet` on your GitHub account, and run:
+```bash
+# Rename default branch to main
+git branch -M main
+
+# Link your local repository to GitHub (replace with your actual GitHub URL)
+git remote add origin https://github.com/YOUR_GITHUB_USERNAME/SyncMeet.git
+
+# Push changes to GitHub
+git push -u origin main
+```
+
+---
+
+## Part 2: Deploying the Backend (Render.com)
+
+We will deploy the Node.js Express server to Render.
+
+### 1. Create a Free Account
+Go to [Render](https://render.com) and create an account using your GitHub login.
+
+### 2. Create a Web Service
+1. Click **New** -> **Web Service**.
+2. Connect your GitHub account and select your `SyncMeet` repository.
+3. Configure the settings:
+   - **Name**: `syncmeet-backend`
+   - **Root Directory**: `backend` (Important: points to the backend subfolder)
+   - **Language**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Plan**: `Free`
+
+### 3. Add Environment Variables
+Click on the **Environment** tab inside your Render Web Service and add the following variables:
+- `MONGO_URI`: `mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/syncmeet?retryWrites=true&w=majority` (Replace with your actual MongoDB Atlas connection string)
+- `JWT_SECRET`: `your_random_jwt_secret_key`
+- `PORT`: `8000` (Render will override this, but standard settings are good)
+
+### 4. Deploy
+Click **Deploy Web Service**. Once active, copy the live URL provided by Render (e.g., `https://syncmeet-backend.onrender.com`).
+
+---
+
+## Part 3: Adjust Frontend Environment URL
+
+Before deploying the frontend, update the connection URL to point to the live backend:
+
+1. Open `frontend/src/environment.js`.
+2. Change the server URL definition to point to your live Render backend URL:
+   ```javascript
+   let server = "https://syncmeet-backend.onrender.com";
+   export default server;
+   ```
+3. Commit and push the update to GitHub:
+   ```bash
+   git add frontend/src/environment.js
+   git commit -m "Update frontend connection URL to point to live backend"
+   git push origin main
+   ```
+
+---
+
+## Part 4: Deploying the Frontend (Vercel)
+
+We will deploy the React application to Vercel.
+
+### 1. Create a Vercel Account
+Go to [Vercel](https://vercel.com) and sign up using your GitHub account.
+
+### 2. Import Project
+1. Click **Add New** -> **Project**.
+2. Select your `SyncMeet` repository from the connected GitHub list.
+3. Configure the Project Settings:
+   - **Project Name**: `syncmeet-frontend`
+   - **Framework Preset**: `Create React App`
+   - **Root Directory**: Click Edit and select the `frontend` folder (Important: points to the frontend subfolder).
+   - **Build and Output Settings**: Default (Build Command: `npm run build`, Output Directory: `build`).
+4. Click **Deploy**.
+
+Vercel will build the frontend, deploy it, and provide a live URL (e.g., `https://syncmeet-frontend.vercel.app`). Open this URL in your browser to run the production application!
